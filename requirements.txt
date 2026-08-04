@@ -11,7 +11,11 @@ markitdown[pdf]>=0.1.0
 fpdf2>=2.7.0
 
 # Task 4 - Chunking & Indexing
-langchain-text-splitters>=0.2.0
+langchain==0.2.17
+langchain-core==0.2.43
+langchain-community==0.2.19
+langchain-text-splitters==0.2.4
+
 sentence-transformers>=2.2.0
 chromadb>=0.5.0
 
@@ -31,7 +35,7 @@ streamlit>=1.35.0
 # Group project - Evaluation
 ragas==0.1.21
 datasets>=2.14.0
-langchain-openai>=0.1.0
+langchain-openai==0.1.25
 
 # Testing (dung de cham diem bai ca nhan)
 pytest>=7.0.0
