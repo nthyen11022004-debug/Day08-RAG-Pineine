@@ -1,0 +1,54 @@
+# Sinh viên RMIT tìm thấy sứ mệnh toàn cầu từ chương trình lãnh đạo của Liên Hợp Quốc
+
+**Source:** https://www.rmit.edu.vn/vi/tin-tuc/tat-ca-tin-tuc/2026/jul/sinh-vien-rmit-tim-thay-su-menh-toan-cau-tu-chuong-trinh-lanh-dao-cua-lien-hop-quoc
+**Crawled:** 2026-08-04T10:26:01.063961
+
+---
+
+Trúc là một trong 20 đại biểu nhận hỗ trợ toàn phần để tham gia chương trình, được tuyển chọn từ hơn 250 hồ sơ trên toàn thế giới. Trong khuôn khổ chương trình, cô còn được trao Giải thưởng Hòa bình toàn cầu, dành cho những đại biểu tích cực tham gia các hoạt động và thảo luận xuyên suốt sự kiện.
+
+Được tổ chức tại Trung tâm Hội nghị Liên Hợp Quốc ở Bangkok, Chương trình Lãnh đạo quốc tế quy tụ những lãnh đạo trẻ, những người tiên phong đổi mới và các bạn trẻ tạo tác động xã hội đến từ nhiều quốc gia. Chương trình tập trung vào các chủ đề về lãnh đạo, ngoại giao và hợp tác quốc tế nhằm thúc đẩy các Mục tiêu Phát triển bền vững (SDG) của Liên Hợp Quốc. Thông qua các hội thảo về kỹ năng lãnh đạo, thảo luận chính sách và hoạt động giao lưu đa văn hóa, đại biểu được nâng cao năng lực lãnh đạo thực tiễn, đồng thời xây dựng mạng lưới hợp tác quốc tế để cùng giải quyết các thách thức toàn cầu.
+
+Với Trúc, điều quý giá nhất cô nhận được không phải là học bổng hay giải thưởng, mà là một góc nhìn hoàn toàn mới về ý nghĩa thật sự của sự lãnh đạo.
+
+Trúc chia sẻ: “Trước khi tham dự chương trình, tôi từng nghĩ lãnh đạo là khả năng tạo ảnh hưởng đến người khác. Sau khi chương trình kết thúc, tôi nhận ra rằng lãnh đạo thực sự bắt đầu từ việc sẵn sàng lắng nghe, dám chất vấn những giả định của chính mình và mở lòng với những góc nhìn khác biệt. Qua những cuộc trò chuyện chân thành với các bạn trẻ đến từ nhiều nền văn hóa khác nhau, tôi nhận ra rằng dù mỗi nơi đối mặt với những thách thức riêng, tất cả chúng tôi đều cùng hướng đến một tương lai bền vững và bao trùm hơn”.
+
+Điều khiến Trúc nhớ nhất không diễn ra trong các bài phát biểu hay hội thảo, mà chính là những cuộc trò chuyện sau mỗi phiên làm việc.
+
+“Trong bữa trưa, giờ giải lao hay trên đường về khách sạn, tôi có cơ hội trò chuyện với các đại biểu đến từ nhiều quốc gia khác nhau”, Trúc nhớ lại.
+
+“Chúng tôi chia sẻ về các dự án đang thực hiện, những thách thức đang phải đối mặt và lý do khiến mỗi người theo đuổi công việc đó. Chúng tôi góp ý cho nhau, trao đổi ý tưởng, thậm chí bàn về khả năng hợp tác sau khi chương trình kết thúc. Dù đến từ những quốc gia và làm việc trong những lĩnh vực rất khác nhau, từ giáo dục, biến đổi khí hậu đến y tế hay phát triển thanh niên, tôi nhận ra tất cả đều đang nỗ lực tạo ra những thay đổi tích cực cho cộng đồng của mình”.
+
+Chính những cuộc trò chuyện ấy đã thay đổi cách Trúc nhìn nhận về vai trò của một lãnh đạo.
+
+“Lãnh đạo không phải là người có tất cả câu trả lời hay luôn đứng trước đám đông. Đó là người đủ tò mò để lắng nghe, đủ cởi mở để học hỏi từ những góc nhìn khác biệt và sẵn sàng hợp tác để tạo nên những điều lớn lao hơn chính bản thân mình”.
+
+Trải nghiệm này cũng là một dấu mốc trong hành trình học tập tại Đại học RMIT Việt Nam, nơi Trúc luôn chủ động tìm kiếm cơ hội học hỏi vượt ra ngoài giảng đường. Bên cạnh việc học, cô đảm nhiệm vai trò Đại sứ sinh viên và Đại diện sinh viên Khoa Truyền thông và Thiết kế RMIT, tham gia Chương trình Bạn đồng hành dành cho sinh viên quốc tế, góp sức vào các dự án nghiên cứu về trí tuệ nhân tạo tạo sinh và chính sách công, các dự án đổi mới sáng tạo vì cộng đồng, sáng kiến dành cho thanh niên cũng như nhiều chương trình phát triển lãnh đạo trong khu vực.
+
+Nhìn lại hành trình đã qua, Trúc cho biết chính những trải nghiệm đó đã giúp cô nhận ra ngôn ngữ chưa bao giờ là đích đến cuối cùng.
+
+“Là sinh viên ngành Ngôn ngữ, tôi từng nghĩ tương lai của mình sẽ chỉ xoay quanh ngôn ngữ. Nhưng sau vài năm qua, tôi dần nhận ra ngôn ngữ không phải đích đến, mà là cây cầu giúp tôi kết nối với con người, các nền văn hóa và những vấn đề phức tạp đang gắn kết thế giới”.
+
+Trở về từ Bangkok, Trúc cho biết điều cô mang theo còn giá trị hơn cả sự ghi nhận quốc tế.
+
+“Tôi trở về với một điều quý giá hơn cả tấm bằng chứng nhận hay những mối quan hệ mới, đó chính là nhìn nhận rõ về con đường mình muốn đi”.
+
+“Lần đầu tiên, tôi chắc chắn rằng mình muốn vượt ra khỏi việc học ngôn ngữ như một công cụ giao tiếp để theo đuổi ngành [Quốc tế học](https://www.rmit.edu.vn/vi/hoc-tap-tai-rmit/chuong-trinh-cu-nhan/cu-nhan-quoc-te-hoc), nơi tôi có thể hiểu sâu hơn về quản trị toàn cầu, ngoại giao và hợp tác quốc tế”.
+
+Hiện là sinh viên năm hai tại RMIT Việt Nam, Trúc mong muốn theo đuổi sự nghiệp trong lĩnh vực ngoại giao hoặc làm việc tại một tổ chức quốc tế. Cô cũng hy vọng sẽ góp phần tạo thêm nhiều cơ hội để các bạn trẻ được tiếp cận với giáo dục quốc tế, các chương trình phát triển lãnh đạo và những hoạt động giao lưu đa văn hóa.
+
+“Tôi tin rằng đầu tư cho thế hệ trẻ hôm nay là một trong những cách ý nghĩa nhất để tạo nên những tác động bền vững cho thế giới”.
+
+Tiến sĩ Lê Xuân Quỳnh, Chủ nhiệm bộ môn Ngôn ngữ tại Đại học RMIT Việt Nam, chia sẻ rằng thành tích của Trúc phản ánh rõ tiềm năng lãnh đạo cũng như khát vọng tạo ra những giá trị tích cực cho cộng đồng.
+
+“Trong suốt quá trình học, Trúc luôn thể hiện năng lực vượt trội trong giao tiếp, lãnh đạo và khả năng kết nối mọi người. Bạn cũng chủ động vận dụng năng lực toàn cầu được trang bị tại RMIT vào các tình huống thực tế. Là một thành viên tích cực của cộng đồng RMIT Việt Nam, Trúc luôn góp phần thúc đẩy sự gắn kết sinh viên và tăng cường giao lưu giữa các nền văn hóa”, Tiến sĩ Quỳnh nhận xét.
+
+Theo Tiến sĩ Quỳnh, Trúc còn tham gia các dự án nghiên cứu về đổi mới sáng tạo vì cộng đồng và những sáng kiến dành cho thanh niên, qua đó thể hiện tinh thần làm việc nhóm, khả năng thích ứng và cam kết tạo ra những tác động tích cực cho xã hội.
+
+“Những trải nghiệm đó cho thấy tiềm năng trở thành lãnh đạo của Trúc cũng như sự sẵn sàng để thành công trong môi trường quốc tế đa dạng”.
+
+Trúc hy vọng nhiều sinh viên sẽ mạnh dạn nắm bắt những cơ hội giúp bản thân bước ra khỏi vùng an toàn.
+
+“Lãnh đạo không được đo bằng chức danh lớn đến đâu, mà bằng việc bạn sẵn sàng thấu hiểu bao nhiêu góc nhìn khác nhau trước khi hành động. Đó là hình mẫu lãnh đạo và công dân toàn cầu mà tôi mong muốn trở thành”.
+
+**Bài:** Thùy Dung
