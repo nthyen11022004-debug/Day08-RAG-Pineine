@@ -30,6 +30,7 @@ chroma_db/ cũ trước khi reindex — nếu không, chunk cũ và mới sẽ t
 trong cùng collection, retrieval sẽ trả về kết quả rác từ dữ liệu cũ.
 """
 
+from functools import lru_cache
 from pathlib import Path
 
 import chromadb
@@ -51,10 +52,16 @@ CHUNK_SIZE = 800
 CHUNK_OVERLAP = 100
 CHUNKING_METHOD = "recursive"
 
-# Embedding model: BAAI/bge-m3 phù hợp cho tiếng Việt và tiếng Anh, có chiều
-# embedding 1024, nên tốt cho retrieval semantic.
-EMBEDDING_MODEL = "BAAI/bge-m3"
-EMBEDDING_DIM = 1024
+# Embedding model: đa ngữ là bắt buộc vì corpus tiếng Việt (crawl từ bản /vi của
+# rmit.edu.vn) — model chỉ-tiếng-Anh như all-MiniLM-L6-v2 sẽ hỏng hoàn toàn.
+#
+# Chọn paraphrase-multilingual-MiniLM-L12-v2 (458MB) thay vì BAAI/bge-m3 (2.2GB):
+# bge-m3 cho chất lượng tiếng Việt tốt hơn, nhưng nặng gấp 5 lần và trong điều
+# kiện mạng của nhóm đã tải hỏng giữa chừng. MiniLM đa ngữ đủ tốt để chạy và đánh
+# giá toàn bộ pipeline. Muốn đổi lại bge-m3 thì sửa 2 dòng dưới, XOÁ chroma_db/
+# rồi index lại — số chiều khác nhau (384 vs 1024) nên collection cũ không dùng được.
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+EMBEDDING_DIM = 384
 
 # Vector store: ChromaDB persistent, dễ dùng local và phù hợp cho lab.
 VECTOR_STORE = "chromadb"
@@ -92,8 +99,15 @@ def load_documents() -> list[dict]:
     return documents
 
 
+@lru_cache(maxsize=1)
 def get_embedding_model() -> SentenceTransformer:
-    """Khởi tạo embedding model dùng chung cho Task 4 và Task 5."""
+    """
+    Khởi tạo embedding model dùng chung cho Task 4 và Task 5.
+
+    lru_cache là BẮT BUỘC, không phải tối ưu vặt: Task 5 gọi hàm này ở mỗi lần
+    semantic_search(), mà bge-m3 nặng ~2.2GB. Không cache thì mỗi câu hỏi trong
+    chatbot phải nạp lại toàn bộ model từ đĩa — vài chục giây cho một câu trả lời.
+    """
     return SentenceTransformer(EMBEDDING_MODEL)
 
 

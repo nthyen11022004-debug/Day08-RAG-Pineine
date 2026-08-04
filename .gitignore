@@ -12,6 +12,11 @@ venv/
 # Temp PDF conversion cache
 data/_tmp_pdf/
 
+# Vector store — sinh ra khi chạy Task 4, KHÔNG commit.
+# Vector gắn chặt với embedding model đang dùng; ai đổi model mà pull nhầm
+# collection cũ sẽ gặp lỗi lệch số chiều (384 vs 1024 vs 1536).
+chroma_db/
+
 # Temp / cache
 .pytest_cache/
 *.tmp

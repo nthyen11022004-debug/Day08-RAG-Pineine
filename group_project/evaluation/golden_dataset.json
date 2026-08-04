@@ -1,17 +1,77 @@
 [
   {
-    "question": "Học phí hàng năm của chương trình Business tại RMIT Vietnam là bao nhiêu?",
-    "expected_answer": "Khoảng 375.840.000 VND mỗi năm (tùy chương trình cụ thể).",
-    "expected_context": "Trang Tuition Fees, mục Undergraduate Programs"
+    "question": "Học phí tại RMIT được thanh toán như thế nào?",
+    "expected_answer": "Học phí được thanh toán theo từng học kỳ, dựa trên số môn sinh viên học trong từng học kỳ.",
+    "expected_context": "Tại RMIT, học phí sẽ được thanh toán theo từng học kỳ, dựa trên số môn sinh viên học trong từng học kỳ."
   },
   {
-    "question": "Học phí được thanh toán theo hình thức nào?",
-    "expected_answer": "Thanh toán theo từng học kỳ, tính theo từng môn học đã đăng ký.",
-    "expected_context": "Trang Tuition Fees, mục Payment Structure"
+    "question": "Một năm RMIT có bao nhiêu học kỳ và sinh viên được đăng ký tối đa bao nhiêu môn mỗi học kỳ?",
+    "expected_answer": "Mỗi năm có 3 học kỳ và sinh viên được đăng ký tối đa 3 môn mỗi học kỳ.",
+    "expected_context": "Tại RMIT Việt Nam, mỗi năm có 3 học kỳ, sinh viên được đăng ký tối đa 3 môn/ học kỳ."
   },
   {
-    "question": "Trường có cung cấp ký túc xá trong khuôn viên không?",
-    "expected_answer": "Không — trường không cung cấp chỗ ở trong khuôn viên, nhưng có đội ngũ hỗ trợ sinh viên tìm chỗ ở gần trường.",
-    "expected_context": "Trang Accommodation Services"
+    "question": "Phương thức thanh toán trực tuyến nào được khuyến nghị tại RMIT?",
+    "expected_answer": "Thanh toán trực tuyến qua myRMIT được khuyến nghị vì có tính bảo mật cao, xác nhận tự động và thời gian cập nhật nhanh hơn.",
+    "expected_context": "Thanh toán trực tuyến qua myRMIT là phương thức thanh toán được khuyến nghị nhờ có tính bảo mật cao, xác nhận tự động và thời gian cập nhật nhanh hơn."
+  },
+  {
+    "question": "Sinh viên quốc tế có bắt buộc phải có bảo hiểm y tế không?",
+    "expected_answer": "Có. Tất cả sinh viên quốc tế bắt buộc phải có bảo hiểm y tế, và RMIT Việt Nam sẽ thay mặt sinh viên mua bảo hiểm phù hợp nếu không có giấy tờ chứng minh loại bảo hiểm khác trước ngày học kỳ bắt đầu.",
+    "expected_context": "Tất cả sinh viên quốc tế bắt buộc phải có bảo hiểm y tế. RMIT Việt Nam sẽ thay mặt sinh viên mua bảo hiểm y tế phù hợp."
+  },
+  {
+    "question": "Học bổng tại RMIT có thể hỗ trợ bao nhiêu phần học phí?",
+    "expected_answer": "Học bổng có thể hỗ trợ toàn bộ hoặc một phần học phí của chương trình học tại RMIT Việt Nam.",
+    "expected_context": "Học bổng hỗ trợ toàn bộ hoặc một phần học phí một chương trình học tại Đại học RMIT Việt Nam."
+  },
+  {
+    "question": "Học bổng có thể chuyển đổi thành tiền mặt hoặc chuyển nhượng không?",
+    "expected_answer": "Không. Học bổng không thể chuyển đổi thành tiền mặt hoặc chuyển nhượng trong bất cứ trường hợp nào.",
+    "expected_context": "Học bổng không thể chuyển đổi thành tiền mặt hoặc chuyển nhượng trong bất cứ trường hợp nào."
+  },
+  {
+    "question": "Sinh viên nhận học bổng phải học tối thiểu bao nhiêu tín chỉ mỗi kỳ?",
+    "expected_answer": "Sinh viên nhận học bổng phải học toàn thời gian, tương đương ít nhất 36 tín chỉ mỗi kỳ cho chương trình đại học và ít nhất 24 tín chỉ mỗi kỳ cho chương trình cao học.",
+    "expected_context": "Sinh viên nhận học bổng phải học toàn thời gian, tương đương ít nhất 36 tín chỉ một kỳ cho chương trình đại học, ít nhất 24 tín chỉ một kỳ cho chương trình cao học."
+  },
+  {
+    "question": "Khi nào sinh viên nhận học bổng có thể xin giảm tải chương trình học?",
+    "expected_answer": "Một số trường hợp đặc biệt như đảm nhiệm trọng trách ngoại khóa hoặc có khuyết tật có thể xin phép giảm tải chương trình học trong thời gian nhất định bằng cách liên hệ scholarships@rmit.edu.vn.",
+    "expected_context": "Sinh viên nhận học bổng đảm nhiệm những trọng trách quan trọng trong các hoạt động ngoại khóa tại trường, như thành viên của Student Council, hoặc có khuyết tật có thể xin phép giảm tải chương trình học trong thời gian nhất định."
+  },
+  {
+    "question": "Sinh hoạt phí hàng tháng được gửi vào tài khoản ngân hàng vào thời điểm nào?",
+    "expected_answer": "Sinh hoạt phí hàng tháng được gửi vào tài khoản ngân hàng vào ngày thứ Sáu thứ hai hàng tháng.",
+    "expected_context": "Sinh hoạt phí hàng tháng được gửi vào tài khoản ngân hàng vào ngày thứ Sáu thứ hai hàng tháng."
+  },
+  {
+    "question": "Sinh viên nhận học bổng có thể tạm vắng tối đa bao lâu?",
+    "expected_answer": "Sinh viên nhận học bổng có thể xin tạm vắng trong các kỳ học trong tương lai nhưng thời gian nghỉ không được phép quá 2 kỳ liên tiếp trong suốt khóa học.",
+    "expected_context": "Khi đã nhận học bổng, sinh viên đó có thể xin tạm vắng trong các kỳ học trong tương lai, tuy nhiên thời gian nghỉ không được phép quá 2 kỳ liên tiếp trong suốt khoá học."
+  },
+  {
+    "question": "Lệ phí xét hồ sơ nhập học là bao nhiêu?",
+    "expected_answer": "Lệ phí xét hồ sơ nhập học là 2,000,000 đồng.",
+    "expected_context": "Hóa đơn lệ phí xét hồ sơ 2,000,000 đồng (đóng tại quầy thu ngân RMIT hoặc chuyển khoản)."
+  },
+  {
+    "question": "Hồ sơ nhập học cần chuẩn bị gì về bằng tốt nghiệp và học bạ?",
+    "expected_answer": "Cần một bản sao chứng thực bằng tốt nghiệp THPT hoặc giấy chứng nhận tốt nghiệp THPT tạm thời, cùng một bản sao chứng thực học bạ lớp 10, 11, 12 kèm bản dịch tiếng Anh công chứng.",
+    "expected_context": "Một bản sao chứng thực bằng tốt nghiệp THPT hoặc giấy chứng nhận tốt nghiệp THPT tạm thời. Một bản sao chứng thực học bạ lớp 10, 11, 12."
+  },
+  {
+    "question": "Chứng chỉ tiếng Anh nộp cho hồ sơ nhập học có thời hạn bao lâu?",
+    "expected_answer": "Chứng chỉ tiếng Anh như IELTS, TOEFL hoặc PTE có thời hạn trong vòng hai năm.",
+    "expected_context": "Một bản sao chứng chỉ Anh ngữ (IELTS / TOEFL / PTE) có thời hạn trong vòng hai năm."
+  },
+  {
+    "question": "Student Connect cung cấp gì cho sinh viên?",
+    "expected_answer": "Student Connect cung cấp các cách đơn giản để sinh viên tiếp cận dịch vụ hỗ trợ tại RMIT Việt Nam.",
+    "expected_context": "Student Connect cung cấp các cách đơn giản để sinh viên tiếp cận dịch vụ hỗ trợ tại RMIT Việt Nam."
+  },
+  {
+    "question": "Thư viện RMIT mở cửa vào giờ nào trong học kỳ?",
+    "expected_answer": "Trong học kỳ, thư viện mở từ thứ Hai đến thứ Sáu lúc 8am-9pm và thứ Bảy, Chủ nhật lúc 8am-5pm.",
+    "expected_context": "During semester Monday to Friday: 8am - 9pm. Saturday and Sunday: 8am - 5pm."
   }
 ]

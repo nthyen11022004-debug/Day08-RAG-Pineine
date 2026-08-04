@@ -1,0 +1,16 @@
+# Tắt file watcher của Streamlit.
+#
+# Watcher dò mọi module đã nạp để theo dõi thay đổi file. Khi chạm vào
+# `transformers` (lazy-loading), việc hỏi __path__ kích hoạt import hàng loạt bộ
+# xử lý ẢNH — videomae, vilt, yolos, zoedepth... — vốn cần `torchvision`.
+# Pipeline này chỉ dùng model văn bản nên không cài torchvision, kết quả là
+# hàng trăm dòng ModuleNotFoundError vô hại tràn ra console mỗi lần chạy.
+#
+# Đánh đổi: mất tính năng tự reload khi sửa code — sửa xong phải Ctrl+C rồi
+# chạy lại. Với buổi demo thì đáng, vì console sạch quan trọng hơn hot reload.
+# Muốn hot reload lại thì đổi thành "auto" (và chấp nhận log rác).
+[server]
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false
