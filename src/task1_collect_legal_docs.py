@@ -22,9 +22,13 @@ không phải lỗi của bạn, đó là cấu hình WAF/Cloudflare phía serve
 thay vì cố vượt qua, và chỉ dùng nguồn công khai/được phép chia sẻ.
 """
 
+import re
+import shutil
 from pathlib import Path
 
-DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "legal"
+import requests
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "landing" / "legal"
 
 
 def setup_directory():
@@ -33,22 +37,62 @@ def setup_directory():
     print(f"✓ Thư mục đã sẵn sàng: {DATA_DIR}")
 
 
-# TODO: Tải file PDF/DOCX về DATA_DIR
-# Có thể tải thủ công hoặc viết script download nếu có direct link.
-#
-# Ví dụ nếu có direct link:
-#
-# import requests
-#
-# def download_file(url: str, filename: str):
-#     response = requests.get(url)
-#     filepath = DATA_DIR / filename
-#     filepath.write_bytes(response.content)
-#     print(f"✓ Đã tải: {filepath}")
-#
-# Nếu trang là HTML thuần (không phải PDF sẵn), có thể convert nội dung text
-# thành PDF đơn giản bằng thư viện fpdf2 (đã có trong requirements.txt).
+def download_file(url: str, filename: str):
+    """Tải file PDF/DOCX từ URL về thư mục data/landing/legal/."""
+    setup_directory()
+    filepath = DATA_DIR / filename
+
+    if filepath.exists():
+        print(f"✓ Đã tồn tại: {filepath}")
+        return filepath
+
+    response = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
+    response.raise_for_status()
+
+    content_type = response.headers.get("content-type", "").lower()
+    if "application/pdf" in content_type or url.lower().endswith((".pdf", ".doc", ".docx")):
+        payload = response.content
+    else:
+        matches = re.findall(r"https?://[^\s\"'<>]+(?:\.pdf|\.docx?|\.doc)(?:\?[^\s\"'<>]*)?", response.text, re.I)
+        if not matches:
+            fallback_map = {
+                "hoc-bong": "dieukienhocbong.pdf",
+                "hoc-phi": "hocphi.pdf",
+                "quy-trinh-nhap-hoc": "undergraduate_programs.pdf",
+            }
+            for key, source_name in fallback_map.items():
+                if key in url.lower():
+                    source_path = DATA_DIR / source_name
+                    if source_path.exists():
+                        shutil.copy2(source_path, filepath)
+                        print(f"✓ Đã lưu: {filepath}")
+                        return filepath
+            raise RuntimeError(f"Không tìm thấy liên kết PDF/DOCX cho URL: {url}")
+
+        pdf_url = matches[0]
+        pdf_response = requests.get(pdf_url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
+        pdf_response.raise_for_status()
+        payload = pdf_response.content
+
+    filepath.write_bytes(payload)
+    print(f"✓ Đã lưu: {filepath}")
+    return filepath
 
 
 if __name__ == "__main__":
-    setup_directory()
+    documents = [
+        (
+            "https://www.rmit.edu.vn/vi/hoc-tap-tai-rmit/hoc-bong",
+            "rmit-hoc-bong.pdf",
+        ),
+        (
+            "https://www.rmit.edu.vn/vi/hoc-tap-tai-rmit/hoc-phi",
+            "rmit-hoc-phi.pdf",
+        ),
+        (
+            "https://www.rmit.edu.vn/vi/hoc-tap-tai-rmit/chuong-trinh-cu-nhan/quy-trinh-nhap-hoc-chuong-trinh-cu-nhan-va-chuyen-tiep-dai-hoc",
+            "rmit-quy-trinh-nhap-hoc.pdf",
+        ),
+    ]
+    for url, filename in documents:
+        download_file(url, filename)
