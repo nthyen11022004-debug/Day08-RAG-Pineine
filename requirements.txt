@@ -33,6 +33,11 @@ openai>=1.30.0
 streamlit>=1.35.0
 
 # Group project - Evaluation
+# Nhóm dùng DeepEval. RAGAS giữ lại vì bộ pin langchain 0.2.x ở trên vẫn đủ cho nó
+# chạy, nhưng LƯU Ý: nếu môi trường của bạn đã lỡ nâng langchain-core lên >= 1.x thì
+# ragas sẽ ImportError ("langchain_community.chat_models.vertexai") — khi đó dùng
+# DeepEval, hoặc dựng lại venv sạch đúng theo file này.
+deepeval>=4.0.0
 ragas==0.1.21
 datasets>=2.14.0
 langchain-openai==0.1.25

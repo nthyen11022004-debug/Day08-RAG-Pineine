@@ -550,33 +550,141 @@ run_dashboard()
 ### Kiến Trúc Hệ Thống
 
 ```
-[Vẽ diagram kiến trúc ở đây]
+┌─────────────── INGESTION (offline, chạy 1 lần) ────────────────┐
+│                                                                 │
+│  rmit.edu.vn/vi          Task 1  ──► 3 PDF chính sách           │
+│  (bản tiếng Việt)        Task 2  ──► 16 JSON (8 tin + 8 dịch vụ)│
+│                             │                                   │
+│                             ▼                                   │
+│                          Task 3   MarkItDown ──► 19 file .md    │
+│                             │     (dọn footer PDF lặp mỗi trang)│
+│                             ▼                                   │
+│                          Task 4   RecursiveCharacterTextSplitter│
+│                                   800 ký tự / overlap 100       │
+│                                   ──► 408 chunk                 │
+│                             │                                   │
+│              ┌──────────────┴──────────────┐                    │
+│              ▼                             ▼                    │
+│      ChromaDB (cosine)              BM25Okapi (k1=1.5, b=0.75)  │
+│      MiniLM đa ngữ, 384 dim         cùng bộ 408 chunk           │
+└─────────────────────────────────────────────────────────────────┘
+                     │                        │
+═════════════════════╪════════════════════════╪═══════════════════
+                     │   QUERY (online)       │
+   Câu hỏi tiếng Việt│                        │
+        │            ▼                        ▼
+        ├──►  Task 5  semantic_search    Task 6  lexical_search
+        │     cosine similarity           BM25, tách từ tiếng Việt
+        │            │                        │
+        │            │  ┌─────────────────────┘
+        │            ▼  ▼
+        │     Task 7  rerank_rrf   RRF(d) = Σ 1/(60 + rank)
+        │            │             chunk có ở CẢ HAI list mới cộng dồn
+        │            ▼
+        │     Task 9  retrieve
+        │            │
+        │            ├─ điểm cosine GỐC ≥ 0.54 ──► source = "hybrid"
+        │            │
+        │            └─ điểm cosine GỐC < 0.54
+        │                   └──► Task 8  pageindex_search
+        │                        cây mục lục + LLM suy luận
+        │                        (vectorless) ──► source = "pageindex"
+        │                             │
+        │                             └─ vẫn rỗng ──► trả [] 
+        ▼                                            (từ chối trả lời)
+   Task 10  generate_with_citation
+        │  reorder_for_llm: [1,3,5,4,2] chống "lost in the middle"
+        │  format_context + SYSTEM_PROMPT
+        ▼
+   gpt-4o-mini (temp=0.3, top_p=0.9)
+        │
+        ▼
+   app.py  Streamlit — câu trả lời + citation + badge hybrid/pageindex
 ```
+
+**Ba quyết định thiết kế đáng chú ý:**
+
+1. **Ngưỡng fallback so với điểm cosine GỐC, không phải điểm RRF.** Điểm RRF sau khi
+   fuse luôn ≈ `1/(60+1) = 0.0164` bất kể nội dung có liên quan hay không, nên dùng nó
+   làm ngưỡng thì fallback không bao giờ kích hoạt. Ngưỡng `0.54` được **đo thật** trên
+   corpus (`python -m src.task9_retrieval_pipeline --calibrate`), không phải chọn bừa.
+
+2. **BM25 và semantic dùng chung một bộ chunk.** RRF gộp hai danh sách bằng khoá
+   `source::chunk_index`; nếu hai nhánh trả về đơn vị khác nhau (document vs chunk) thì
+   không khoá nào trùng và RRF chỉ nối list chứ không cộng dồn thứ hạng.
+
+3. **Corpus lấy từ bản `/vi` của rmit.edu.vn.** BM25 là lexical thuần: query "học phí"
+   không thể khớp document "tuition fee", điểm luôn bằng 0. Dùng nguồn tiếng Anh là mất
+   trắng một nửa hybrid search.
 
 ---
 
 ### Phân Công Công Việc
 
-| Thành viên | MSSV | Nhiệm vụ | Trạng thái |
-|-----------|------|----------|------------|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| Thành viên | MSSV | Vai trò | Nhiệm vụ | Trạng thái |
+|-----------|------|---------|----------|------------|
+| Nguyễn Thị Hoàng Yến | 2A202601959 | Role 1 — Team Leader & RAG Architect | Quản trị repo chung, điều phối PR & tiến độ; Task 6 (BM25 lexical search) | ✅ Xong |
+| Ngô Thị Hằng | 2A202601365 | Role 2 — Data & Retrieval Specialist | Task 1 (thu thập PDF chính sách), Task 4 (chunking & indexing), Task 5 (semantic search + HyDE) | ✅ Xong |
+| Nguyễn Huy Hoàng | 2A202601113 | Role 3 — Frontend & Chatbot Dev | Task 2 (crawl tiếng Việt), Task 3 (convert markdown), Task 8 (vectorless RAG), Task 9 (retrieval pipeline), `app.py` | ✅ Xong |
+| Quách Xuân Trường | 2A202601371 | Role 4 — Evaluation & QA Engineer | Task 7 (reranking RRF/MMR), Task 10 (generation có citation), golden dataset + `eval_pipeline.py` | ✅ Xong |
 
 ---
 
 ### Hướng Dẫn Chạy
 
 ```bash
-# Cài đặt dependencies
+# 1. Cài dependencies
 pip install -r requirements.txt
 
-# Chạy app
-streamlit run app.py
-# hoặc
-chainlit run app.py
+# 2. Khai báo API key
+cp .env.example .env        # Windows PowerShell: Copy-Item .env.example .env
+# Điền OPENAI_API_KEY hoặc OPENROUTER_API_KEY vào .env
 ```
+
+> ⚠️ **Để trống dòng key không dùng, đừng giữ placeholder.** Code chọn provider theo
+> thứ tự `OPENROUTER_API_KEY` → `OPENAI_API_KEY`; chuỗi mẫu `sk-or-v1-...` vẫn là giá
+> trị truthy nên sẽ được chọn trước key thật rồi lỗi 401.
+
+```bash
+# 3. Dựng vector store (BẮT BUỘC trước lần chạy đầu — dữ liệu chunk không commit vào repo)
+python -m src.task4_chunking_indexing
+
+# 4. Chạy chatbot
+streamlit run app.py
+```
+
+Kiểm tra nhanh ở sidebar: *Tài liệu* = 19, *Chunk đã index* = 408. Nếu cột chunk hiện
+`—` thì bước 3 chưa chạy.
+
+**Các lệnh khác:**
+
+```bash
+# Chấm điểm pipeline Task 1-10
+pytest tests/ -v
+
+# Đo lại ngưỡng fallback (bắt buộc khi đổi corpus hoặc embedding model)
+python -m src.task9_retrieval_pipeline --calibrate
+
+# Chạy evaluation A/B, ghi ra group_project/evaluation/results.md
+python -m group_project.evaluation.eval_pipeline                     # DeepEval (mặc định)
+python -m group_project.evaluation.eval_pipeline --framework local   # bộ đo offline, vài giây
+```
+
+> **Về framework evaluation:** nhóm dùng **DeepEval** chứ không phải RAGAS. Môi trường
+> thực tế đã lệch khỏi `requirements.txt` từ CP0 (chạy `langchain-core 1.5.3` thay vì
+> `0.2.43`), và trong môi trường đó `ragas` không import được — `ragas.llms.base` cần
+> `langchain_community.chat_models.vertexai`, module đã bị gỡ khỏi
+> `langchain-community 0.4.x`. Dựng venv sạch đúng theo `requirements.txt` thì RAGAS
+> chạy được; DeepEval được chọn vì cài sạch trên môi trường đang có và cũng nằm trong
+> danh sách rubric cho phép. Chi tiết ở `group_project/README.md`.
+>
+> Tuỳ chọn `--framework local` là bộ đo token-overlap tự viết, dùng để lặp nhanh khi
+> phát triển vì không tốn chi phí LLM.
+
+> **Đổi embedding model?** Sửa `EMBEDDING_MODEL` + `EMBEDDING_DIM` trong
+> `src/task4_chunking_indexing.py`, **xoá `chroma_db/`**, index lại, rồi chạy
+> `--calibrate` lần nữa. Collection cũ có số chiều khác sẽ không dùng lại được, và
+> ngưỡng `0.54` chỉ đúng với model hiện tại.
 
 ---
 

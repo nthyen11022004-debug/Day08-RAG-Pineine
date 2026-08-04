@@ -32,9 +32,10 @@ except ImportError:
     _HAS_UNDERTHESEA = False
 
 
-DATA_DIR = Path("data/standardized")
+# Đường dẫn TUYỆT ĐỐI. Path("data/standardized") tương đối sẽ phụ thuộc thư mục
+# đang đứng khi chạy — pytest hay streamlit gọi từ chỗ khác là corpus rỗng ngay.
+DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "standardized"
 
-# TODO: Load corpus từ data/standardized/ hoặc từ vector store
 CORPUS: list[dict] = []  # List of {'content': str, 'metadata': dict}
 
 # Cache cho BM25 index để không phải build lại mỗi lần gọi lexical_search
@@ -116,7 +117,37 @@ def load_corpus(data_dir: Path = DATA_DIR) -> list[dict]:
                         "metadata": item.get("metadata", {"source": file_path.name}),
                     })
 
-    return corpus
+    if corpus:
+        return corpus
+
+    # Không có .json/.jsonl thì đọc markdown — đây MỚI là thứ Task 3 sinh ra.
+    # (Trước đây thiếu nhánh này nên CORPUS luôn rỗng và lexical_search luôn ném
+    # RuntimeError, tức nhánh BM25 của hybrid search chưa từng chạy lần nào.)
+    return _load_markdown_chunks(data_dir)
+
+
+def _load_markdown_chunks(data_dir: Path) -> list[dict]:
+    """
+    Đọc .md từ data/standardized/ và cắt chunk GIỐNG HỆT Task 4.
+
+    Vì sao phải dùng chung hàm chunk của Task 4 thay vì index nguyên file:
+    RRF ở Task 7 gộp hai danh sách bằng khoá `source::chunk_index::content`.
+    Nếu BM25 trả về nguyên document còn semantic trả về chunk 800 ký tự thì không
+    khoá nào trùng nhau, RRF sẽ chỉ nối hai danh sách lại chứ không hề cộng dồn
+    thứ hạng — mất sạch tác dụng của hybrid search.
+
+    Import ở trong hàm (không phải đầu file) vì task4 kéo theo chromadb và
+    sentence-transformers, nạp mất vài giây; module này không cần chúng.
+    """
+    try:
+        from .task4_chunking_indexing import chunk_documents, load_documents
+    except ImportError:
+        from task4_chunking_indexing import chunk_documents, load_documents
+
+    if not any(data_dir.rglob("*.md")):
+        return []
+
+    return chunk_documents(load_documents())
 
 
 def build_bm25_index(corpus: list[dict]) -> BM25Okapi:

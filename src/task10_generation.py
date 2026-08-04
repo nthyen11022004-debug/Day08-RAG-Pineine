@@ -37,8 +37,12 @@ TOP_P = 0.9
 # Chọn 0.3 vì: RAG cần factual, ít sáng tạo
 TEMPERATURE = 0.3
 
-# TODO: Chọn LLM model (OpenRouter model ID)
-LLM_MODEL = "openai/gpt-4o-mini"  # hoặc model ":free" nếu chưa có credit
+# Model ID KHÁC NHAU giữa hai provider: OpenRouter yêu cầu tiền tố nhà cung cấp
+# ("openai/gpt-4o-mini"), còn API OpenAI chỉ nhận tên trần ("gpt-4o-mini") và sẽ
+# trả 404 model_not_found nếu gửi kèm tiền tố. Chọn theo key đang dùng, nếu không
+# thành viên dùng OpenAI key sẽ chết ngay lần gọi đầu.
+LLM_MODEL_OPENROUTER = "openai/gpt-4o-mini"  # hoặc model ":free" nếu chưa có credit
+LLM_MODEL_OPENAI = "gpt-4o-mini"
 
 
 # =============================================================================
@@ -214,8 +218,15 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
             "retrieval_source": chunks[0].get("source", "hybrid"),
         }
 
-    openrouter_key = os.getenv("OPENROUTER_API_KEY")
-    openai_key = os.getenv("OPENAI_API_KEY")
+    # strip() + loại placeholder: .env.example để sẵn "sk-or-v1-...", chuỗi đó vẫn
+    # truthy nên nếu chỉ kiểm tra rỗng thì placeholder giả sẽ được chọn trước key thật.
+    openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+    if openrouter_key.endswith("..."):
+        openrouter_key = ""
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if openai_key.endswith("..."):
+        openai_key = ""
+
     if not openrouter_key and not openai_key:
         raise RuntimeError(
             "Missing API key. Set OPENROUTER_API_KEY or OPENAI_API_KEY in .env."
@@ -223,14 +234,15 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
 
     from openai import OpenAI
 
-    client = (
-        OpenAI(api_key=openrouter_key, base_url="https://openrouter.ai/api/v1")
-        if openrouter_key
-        else OpenAI(api_key=openai_key)
-    )
+    if openrouter_key:
+        client = OpenAI(api_key=openrouter_key, base_url="https://openrouter.ai/api/v1")
+        model = LLM_MODEL_OPENROUTER
+    else:
+        client = OpenAI(api_key=openai_key)
+        model = LLM_MODEL_OPENAI
     user_message = f"Context:\n{context}\n\n---\n\nQuestion: {query.strip()}"
     response = client.chat.completions.create(
-        model=LLM_MODEL,
+        model=model,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
