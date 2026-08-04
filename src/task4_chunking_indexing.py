@@ -32,9 +32,9 @@ trong cùng collection, retrieval sẽ trả về kết quả rác từ dữ li�
 
 from pathlib import Path
 
+import chromadb
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
-import chromadb
 
 STANDARDIZED_DIR = Path(__file__).resolve().parent.parent / "data" / "standardized"
 CHROMA_DIR = Path(__file__).resolve().parent.parent / "chroma_db"
@@ -58,7 +58,9 @@ EMBEDDING_DIM = 1024
 
 # Vector store: ChromaDB persistent, dễ dùng local và phù hợp cho lab.
 VECTOR_STORE = "chromadb"
-COLLECTION_NAME = "university_services_docs"
+# Collection sync theo domain dữ liệu "RMIT University Services" để tránh lẫn
+# với corpus khác nếu sau này mở rộng bài lab.
+COLLECTION_NAME = "rmit_university_services"
 
 
 # =============================================================================
@@ -88,6 +90,21 @@ def load_documents() -> list[dict]:
             }
         )
     return documents
+
+
+def get_embedding_model() -> SentenceTransformer:
+    """Khởi tạo embedding model dùng chung cho Task 4 và Task 5."""
+    return SentenceTransformer(EMBEDDING_MODEL)
+
+
+def get_collection():
+    """Lấy hoặc tạo ChromaDB collection persistent dùng chung."""
+    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    return client.get_or_create_collection(
+        name=COLLECTION_NAME,
+        metadata={"hnsw:space": "cosine"},
+    )
 
 
 def chunk_documents(documents: list[dict]) -> list[dict]:
@@ -125,7 +142,7 @@ def embed_chunks(chunks: list[dict]) -> list[dict]:
     Returns:
         Mỗi chunk dict được thêm key 'embedding': list[float]
     """
-    model = SentenceTransformer(EMBEDDING_MODEL)
+    model = get_embedding_model()
     texts = [chunk["content"] for chunk in chunks]
     embeddings = model.encode(texts, show_progress_bar=False)
 
@@ -138,17 +155,14 @@ def index_to_vectorstore(chunks: list[dict]):
     """
     Lưu chunks vào vector store đã chọn.
     """
-    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
-    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-    collection = client.get_or_create_collection(
-        name=COLLECTION_NAME,
-        metadata={"hnsw:space": "cosine"},
-    )
+    collection = get_collection()
 
     ids = [
         f"{chunk['metadata']['source']}_chunk_{chunk['metadata']['chunk_index']}"
         for chunk in chunks
     ]
+    if not chunks:
+        return
     collection.upsert(
         ids=ids,
         documents=[chunk["content"] for chunk in chunks],
@@ -163,6 +177,7 @@ def run_pipeline():
     print("Task 4: Chunking & Indexing")
     print(f"  Chunking: {CHUNKING_METHOD} (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
     print(f"  Embedding: {EMBEDDING_MODEL} (dim={EMBEDDING_DIM})")
+    print(f"  Collection: {COLLECTION_NAME}")
     print(f"  Vector Store: {VECTOR_STORE}")
     print("=" * 50)
 
